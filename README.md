@@ -5,13 +5,16 @@ FOSSinator is a tool for automating the replacement of libraries and imports in 
 # How to use
 - build repo
 ```
-go build ./main.go
+go build ./fossinator.go
 ```
-- prepare config.yaml in directory with main.exe
-- run tool with target repo in args
+- prepare config.yaml in directory with fossinator.exe
+- run tool with target repo in args (if `-dir` arg is empty - run in current folder)
 ```
-./main.exe <path to your go project>
+./fossinator.exe -dir <path to your go project>
 ```
+- optional flags:
+  - `-fmt` - perform code formatting
+  - `-tidy` - perform 'go mod tidy'
 
 # Features
 - Replace lib names + lib versions in go.mod
