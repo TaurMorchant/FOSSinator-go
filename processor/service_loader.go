@@ -17,7 +17,8 @@ func AddConfigLoaderConfiguration(dir string) error {
 
 	mainFileName, err := fs.FindMainFile(dir)
 	if err != nil {
-		return err
+		fmt.Println("Main file is mot found => skip step")
+		return nil
 	}
 	fmt.Println("mainFileName=", mainFileName)
 

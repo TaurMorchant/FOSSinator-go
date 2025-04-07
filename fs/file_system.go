@@ -100,18 +100,13 @@ func FmtAndWrite(fs *token.FileSet, path string, node *ast.File) error {
 		}
 	}(file)
 
-	//todo vlla: side effect - CRLF converted to LF
+	// side effect - CRLF converted to LF
 	if err = format.Node(file, fs, node); err != nil {
 		return err
 	}
 
-	//todo vlla: side effect - Fprint replaces spaces by tabs AND CRLF converted to LF
+	// side effect - Fprint replaces spaces by tabs AND CRLF converted to LF
 	//if err := printer.Fprint(file, fs, node); err != nil {
-	//	return err
-	//}
-
-	//todo vlla работает так же, как format.Node, но дольше
-	//if err := runGoFmt(file.Name()); err != nil {
 	//	return err
 	//}
 

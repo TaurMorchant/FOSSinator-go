@@ -1,8 +1,8 @@
 package config
 
 import (
+	_ "embed"
 	"gopkg.in/yaml.v3"
-	"os"
 )
 
 type LibToReplace struct {
@@ -36,13 +36,11 @@ type Config struct {
 
 var CurrentConfig Config
 
-func Load(name string) error {
-	data, err := os.ReadFile(name)
-	if err != nil {
-		return err
-	}
+//go:embed config.yaml
+var configSrc []byte
 
-	if err := yaml.Unmarshal(data, &CurrentConfig); err != nil {
+func Load() error {
+	if err := yaml.Unmarshal(configSrc, &CurrentConfig); err != nil {
 		return err
 	}
 

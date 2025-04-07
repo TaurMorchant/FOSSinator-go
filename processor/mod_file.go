@@ -8,7 +8,6 @@ import (
 	"os"
 )
 
-// side effects - new requirements are added to the end of the last "require" block
 func UpdateGoMod(dir string) error {
 	fmt.Printf("----- Update go.mod [START] -----\n")
 	defer fmt.Printf("----- Update go.mod [END] -----\n\n")

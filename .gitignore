@@ -4,8 +4,5 @@
 *.ipr
 *.iws
 
-# Config
-config.yaml
-
 # .exe
 *.exe
