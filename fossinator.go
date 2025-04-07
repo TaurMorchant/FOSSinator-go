@@ -6,10 +6,15 @@ import (
 	"fossinator/config"
 	"fossinator/fs"
 	"fossinator/processor"
+	"os"
 )
 
 func init() {
-	config.Load("config.yaml")
+	err := config.Load("config.yaml")
+	if err != nil {
+		fmt.Println("Cannot load config file.", err)
+		os.Exit(1)
+	}
 }
 
 func main() {
@@ -26,22 +31,25 @@ func main() {
 	}
 
 	if _, err := fs.FindGoModFile(dir); err != nil {
-		fmt.Printf("Directory '%s' is not a go module", dir)
-		return
+		fmt.Printf("Directory '%s' is not a go module, cannot continue", dir)
+		os.Exit(1)
 	}
 
 	fmt.Println("Directory to process: ", dir)
 
 	if err := processor.UpdateImports(dir); err != nil {
 		fmt.Println("Error during update imports:", err)
+		os.Exit(1)
 	}
 
 	if err := processor.UpdateGoMod(dir); err != nil {
 		fmt.Println("Error during update go.mod:", err)
+		os.Exit(1)
 	}
 
 	if err := processor.AddConfigLoaderConfiguration(dir); err != nil {
 		fmt.Println("Error during AddConfigLoaderConfiguration:", err)
+		os.Exit(1)
 	}
 
 	if *fmtFlag {

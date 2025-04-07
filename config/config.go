@@ -36,13 +36,15 @@ type Config struct {
 
 var CurrentConfig Config
 
-func Load(name string) {
+func Load(name string) error {
 	data, err := os.ReadFile(name)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	if err := yaml.Unmarshal(data, &CurrentConfig); err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
