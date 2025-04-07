@@ -31,6 +31,10 @@ type Config struct {
 			Imports      []string `yaml:"imports"`
 			Instructions []string `yaml:"instructions"`
 		} `yaml:"service-loading"`
+		Validation struct {
+			LibsWhiteList   []string `yaml:"libs-whitelist"`
+			ProhibitedWords []string `yaml:"prohibited-words"`
+		} `yaml:"validation"`
 	} `yaml:"go"`
 }
 
