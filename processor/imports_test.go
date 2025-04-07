@@ -17,6 +17,9 @@ func Test_processFile_withLibsToReplace_shouldChangeFullyEqualName(t *testing.T)
 			OldName: "company1/import1/v1",
 			NewName: "company2/import2/v2",
 		}}
+	defer func() {
+		config.CurrentConfig.Go.LibsToReplace = nil
+	}()
 
 	//data
 	const input = `package main
@@ -56,6 +59,9 @@ func Test_processFile_withLibsToReplace_shouldChangeNotFullyEqualName(t *testing
 			OldName: "company1/import1/v1",
 			NewName: "company2/import2/v2",
 		}}
+	defer func() {
+		config.CurrentConfig.Go.LibsToReplace = nil
+	}()
 
 	//data
 	const input = `package main
@@ -95,6 +101,9 @@ func Test_processFile_withImportsToReplace_shouldChangeFullyEqualName_withAlias(
 			OldName: "company1/import1/package_foo",
 			NewName: "company2/import2/package_bar",
 		}}
+	defer func() {
+		config.CurrentConfig.Go.ImportsToReplace = nil
+	}()
 
 	//data
 	const input = `package main
@@ -134,6 +143,9 @@ func Test_processFile_withImportsToReplace_shouldChangeFullyEqualName_withoutAli
 			OldName: "company1/import1/package_foo",
 			NewName: "company2/import2/package_bar",
 		}}
+	defer func() {
+		config.CurrentConfig.Go.ImportsToReplace = nil
+	}()
 
 	const input = `package main
 
@@ -172,6 +184,9 @@ func Test_processFile_withImportsToReplace_shouldNotChangeNotFullyEqualName(t *t
 			OldName: "company1/import1/package_foo",
 			NewName: "company2/import2/package_bar",
 		}}
+	defer func() {
+		config.CurrentConfig.Go.ImportsToReplace = nil
+	}()
 
 	//data
 	const input = `package main
@@ -227,6 +242,10 @@ func Test_processFile_combinedTest(t *testing.T) {
 			NewName: "company7/import7",
 		},
 	}
+	defer func() {
+		config.CurrentConfig.Go.ImportsToReplace = nil
+		config.CurrentConfig.Go.LibsToReplace = nil
+	}()
 
 	//data
 	const input = `package main

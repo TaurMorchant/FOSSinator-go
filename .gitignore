@@ -6,3 +6,6 @@
 
 # Config
 config.yaml
+
+# .exe
+*.exe

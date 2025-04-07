@@ -28,20 +28,7 @@ func UpdateGoMod(dir string) error {
 		return err
 	}
 
-	update := false
-	update = replaceGoVersion(mf) || update
-	update = replaceToolchain(mf) || update
-
-	for _, r := range mf.Require {
-		if ok := replaceDependencies(mf, r); ok {
-			update = true
-			continue
-		}
-		if ok := removeDependencies(mf, r); ok {
-			update = true
-			continue
-		}
-	}
+	update := processModFile(mf)
 
 	if update {
 		fmt.Println("Updated: go.mod")
@@ -57,6 +44,23 @@ func UpdateGoMod(dir string) error {
 }
 
 //--------------------------------------------------------------------------------
+
+func processModFile(file *modfile.File) bool {
+	update := replaceGoVersion(file)
+	update = replaceToolchain(file) || update
+
+	for _, r := range file.Require {
+		if ok := replaceDependencies(file, r); ok {
+			update = true
+			continue
+		}
+		if ok := removeDependencies(file, r); ok {
+			update = true
+			continue
+		}
+	}
+	return update
+}
 
 func replaceDependencies(mf *modfile.File, r *modfile.Require) bool {
 	for _, replacement := range config.CurrentConfig.Go.LibsToReplace {
@@ -96,7 +100,7 @@ func replaceToolchain(mf *modfile.File) bool {
 	if len(toolchain) == 0 {
 		return false
 	}
-	if mf.Toolchain != nil && mf.Toolchain.Name != toolchain {
+	if mf.Toolchain == nil || mf.Toolchain.Name != toolchain {
 		if err := mf.AddToolchainStmt(toolchain); err != nil {
 			println(err.Error())
 		}
