@@ -67,7 +67,7 @@ func insertImports(src string, list []string) (string, error) {
 func formatImports() string {
 	var result string
 	for _, imp := range config.CurrentConfig.Go.ServiceLoading.Imports {
-		result += "\t\"" + imp + "\"\n"
+		result += "\t" + imp + "\n"
 	}
 	return result
 }
